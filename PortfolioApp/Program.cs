@@ -14,10 +14,10 @@ namespace PortfolioApp
         [STAThread]
         static void Main()
         {
-            // Testing Git
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new PortfolioPresentation());
+
         }
     }
 }

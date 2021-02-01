@@ -1,0 +1,4 @@
+1) Create transaction page functions
+2) create sql commands as apart of class of sql functions that use the current basic DBconnect 
+add, delete, update and select. Add logic and functions that type to trans type. 
+3) Create select type that pulls in all data like cost and total
