@@ -35,6 +35,9 @@
             this.tabQuote = new System.Windows.Forms.TabPage();
             this.tabPortfolioChanges = new System.Windows.Forms.TabPage();
             this.buttonTradeSubmit = new System.Windows.Forms.Button();
+            this.textBoxQuantity = new System.Windows.Forms.TextBox();
+            this.comboBoxBuySell = new System.Windows.Forms.ComboBox();
+            this.textBoxTradeTicker = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabCurrentPortfolio.SuspendLayout();
@@ -99,6 +102,9 @@
             // 
             // tabPortfolioChanges
             // 
+            this.tabPortfolioChanges.Controls.Add(this.textBoxTradeTicker);
+            this.tabPortfolioChanges.Controls.Add(this.comboBoxBuySell);
+            this.tabPortfolioChanges.Controls.Add(this.textBoxQuantity);
             this.tabPortfolioChanges.Controls.Add(this.buttonTradeSubmit);
             this.tabPortfolioChanges.Location = new System.Drawing.Point(4, 33);
             this.tabPortfolioChanges.Name = "tabPortfolioChanges";
@@ -110,7 +116,7 @@
             // 
             // buttonTradeSubmit
             // 
-            this.buttonTradeSubmit.Location = new System.Drawing.Point(514, 384);
+            this.buttonTradeSubmit.Location = new System.Drawing.Point(1053, 367);
             this.buttonTradeSubmit.Name = "buttonTradeSubmit";
             this.buttonTradeSubmit.Size = new System.Drawing.Size(126, 144);
             this.buttonTradeSubmit.TabIndex = 0;
@@ -118,11 +124,38 @@
             this.buttonTradeSubmit.UseVisualStyleBackColor = true;
             this.buttonTradeSubmit.Click += new System.EventHandler(this.buttonTradeSubmit_Click);
             // 
+            // textBoxQuantity
+            // 
+            this.textBoxQuantity.Location = new System.Drawing.Point(698, 411);
+            this.textBoxQuantity.Name = "textBoxQuantity";
+            this.textBoxQuantity.Size = new System.Drawing.Size(100, 29);
+            this.textBoxQuantity.TabIndex = 1;
+            this.textBoxQuantity.Text = "0";
+            // 
+            // comboBoxBuySell
+            // 
+            this.comboBoxBuySell.FormattingEnabled = true;
+            this.comboBoxBuySell.Items.AddRange(new object[] {
+            "BUY",
+            "SELL"});
+            this.comboBoxBuySell.Location = new System.Drawing.Point(102, 408);
+            this.comboBoxBuySell.Name = "comboBoxBuySell";
+            this.comboBoxBuySell.Size = new System.Drawing.Size(210, 32);
+            this.comboBoxBuySell.TabIndex = 2;
+            this.comboBoxBuySell.Text = "Choose Action";
+            // 
+            // textBoxTradeTicker
+            // 
+            this.textBoxTradeTicker.Location = new System.Drawing.Point(437, 408);
+            this.textBoxTradeTicker.Name = "textBoxTradeTicker";
+            this.textBoxTradeTicker.Size = new System.Drawing.Size(100, 29);
+            this.textBoxTradeTicker.TabIndex = 3;
+            // 
             // PortfolioPresentation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1410, 924);
+            this.ClientSize = new System.Drawing.Size(1521, 1005);
             this.Controls.Add(this.tabControl1);
             this.Name = "PortfolioPresentation";
             this.Text = "Current Portfolio";
@@ -130,6 +163,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabCurrentPortfolio.ResumeLayout(false);
             this.tabPortfolioChanges.ResumeLayout(false);
+            this.tabPortfolioChanges.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -143,6 +177,9 @@
         private System.Windows.Forms.TabPage tabQuote;
         private System.Windows.Forms.TabPage tabPortfolioChanges;
         private System.Windows.Forms.Button buttonTradeSubmit;
+        private System.Windows.Forms.TextBox textBoxQuantity;
+        private System.Windows.Forms.ComboBox comboBoxBuySell;
+        private System.Windows.Forms.TextBox textBoxTradeTicker;
     }
 }
 

@@ -12,8 +12,7 @@ namespace PortfolioApp
 {
     public partial class PortfolioPresentation : Form
     {
-        //Make instance of connector class to use as neede
-        DBConnect currentDBConnection = new DBConnect();
+
         public PortfolioPresentation()
         {
             InitializeComponent();
@@ -26,12 +25,29 @@ namespace PortfolioApp
 
         private void buttonTradeSubmit_Click(object sender, EventArgs e)
         {
+            Trade trade = new Trade();
+            string ticker = textBoxTradeTicker.Text.ToUpper();
+            decimal quantity = ConvertStringtoDecimal(textBoxQuantity.Text);
+
+            if (comboBoxBuySell.Text == "BUY")
+            {
+                trade.BuyTrade(ticker, quantity);
+            }
+            else if (comboBoxBuySell.Text == "SELL")
+            {
+                trade.SellTrade(ticker, quantity);
+            }
+            else
+            {
+                //Please select action mesg
+            }
 
         }
 
         private void DB_ToDatagridview()
         {
-            //NEED to add a join to this table to pull from stock profile and transaction, showing descrip
+            DBConnect currentDBConnection = new DBConnect();
+            //NEED to add a join to this table to pull from stock profile and transaction,
             //showing description, current price and paid price using sql commands
             DataTable table = new DataTable();
             table = currentDBConnection.Select();
@@ -41,5 +57,32 @@ namespace PortfolioApp
 
             dataGridView1.DataSource = bSource;
         }
+
+        private decimal ConvertStringtoDecimal(string stringVal)
+        {
+            decimal decimalVal = 0;
+            try
+            {
+                decimalVal = System.Convert.ToDecimal(stringVal);
+            }
+            catch (System.OverflowException)
+            {
+                //System.Console.WriteLine(
+                //    "The conversion from string to decimal overflowed.");
+            }
+            catch (System.FormatException)
+            {
+                //System.Console.WriteLine(
+                //    "The string is not formatted as a decimal.");
+            }
+            catch (System.ArgumentNullException)
+            {
+                //System.Console.WriteLine(
+                //    "The string is null.");
+            }
+
+            return decimalVal;
+        }
+    }
 
 }

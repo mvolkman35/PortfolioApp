@@ -82,9 +82,8 @@ namespace PortfolioApp
         }
 
         //Insert statement
-        public void Insert(string ticker, int quantity)
+        public void Insert(string query)
         {
-            string query = $"INSERT INTO holdings (ticker, quantity) VALUES ('{ticker}', {quantity})";
 
             //open connection
             if (this.OpenConnection() == true)
@@ -101,10 +100,8 @@ namespace PortfolioApp
         }
 
         //Update command
-        public void Update(string ticker, int quantity)
+        public void Update(string query)
         {
-            string query = $"UPDATE holdings SET quantity={quantity} WHERE ticker='{ticker}'";
-
             //Open connection
             if (this.OpenConnection() == true)
             {
@@ -123,7 +120,7 @@ namespace PortfolioApp
             }
         }
 
-        //Delete statement
+        //Delete statement ** MAY NOT NEED< MAY BUILD AS SQL TRIGGER
         public void Delete(string ticker)
         {
             string query = $"DELETE FROM holdings WHERE ticker='{ticker}'";
@@ -160,6 +157,32 @@ namespace PortfolioApp
             else
             {
                 return table;
+            }
+        }
+
+        public decimal ScalarQuery(string query)
+        {
+            decimal scalarValue = 0;
+            //Open Connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //ExecuteScalar will return one value
+                if (cmd.ExecuteScalar() != null)
+                {
+                    scalarValue = decimal.Parse(cmd.ExecuteScalar() + "");
+                }
+
+                //close Connection
+                this.CloseConnection();
+
+                return scalarValue;
+            }
+            else
+            {
+                return scalarValue;
             }
         }
     }
