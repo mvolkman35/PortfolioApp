@@ -11,7 +11,7 @@ namespace PortfolioApp
         DBConnect currentDBConnection = new DBConnect();
         public Trade() 
         {
-
+            //Set up all values needed like ticker, quantity, last price, cash amount
         }
 
         public void BuyTrade(string ticker, decimal quantity)
@@ -28,6 +28,10 @@ namespace PortfolioApp
             {
                 string query = $"INSERT into holdings VALUES ('{ticker}', {quantity})";
                 currentDBConnection.Insert(query);
+            }
+            else
+            {
+                //Error Mesg
             }
         }
 
@@ -53,6 +57,13 @@ namespace PortfolioApp
             string query = $"SELECT Quantity FROM holdings WHERE ticker='{ticker}'";
             quantity = Decimal.ToInt32(currentDBConnection.ScalarQuery(query));
             return quantity;
+        }
+
+        private void RecordTransaction(string ticker, decimal quantity)
+        {
+            //need to finish recording amounts 
+            string query = $"INSERT into transactions VALUES ('{ticker}', {quantity})";
+            currentDBConnection.Insert(query);
         }
 
     }

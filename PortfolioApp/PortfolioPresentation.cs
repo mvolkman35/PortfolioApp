@@ -20,7 +20,8 @@ namespace PortfolioApp
 
         private void clickButtonFetchPort_Click(object sender, EventArgs e)
         {
-            DB_ToDatagridview();
+            string query = "SELECT * from holdings";
+            dataGridView1.DataSource = DB_DatagridView(query);
         }
 
         private void buttonTradeSubmit_Click(object sender, EventArgs e)
@@ -44,19 +45,26 @@ namespace PortfolioApp
 
         }
 
-        private void DB_ToDatagridview()
+        private void buttonFetchTransactions_Click(object sender, EventArgs e)
+        {
+            string query = "SELECT * from transactions";
+            dataGridViewTransactions.DataSource = DB_DatagridView(query);
+        }
+
+
+        private BindingSource DB_DatagridView(string query)
         {
             DBConnect currentDBConnection = new DBConnect();
             //NEED to add a join to this table to pull from stock profile and transaction,
             //showing description, current price and paid price using sql commands
             DataTable table = new DataTable();
-            table = currentDBConnection.Select();
+            table = currentDBConnection.Select(query);
 
             BindingSource bSource = new BindingSource();
             bSource.DataSource = table;
-
-            dataGridView1.DataSource = bSource;
+            return bSource;
         }
+
 
         private decimal ConvertStringtoDecimal(string stringVal)
         {

@@ -134,9 +134,9 @@ namespace PortfolioApp
         }
 
         //Select statement
-        public DataTable Select()
+        public DataTable Select(string query)
         {
-            string sqlSelectAll = "SELECT * from holdings";
+            //string sqlSelectAll = "SELECT * from holdings";
 
             DataTable table = new DataTable();
 
@@ -144,7 +144,7 @@ namespace PortfolioApp
             if (this.OpenConnection() == true)
             {
                 MySqlDataAdapter DBDataAdapter = new MySqlDataAdapter();
-                DBDataAdapter.SelectCommand = new MySqlCommand(sqlSelectAll, connection);
+                DBDataAdapter.SelectCommand = new MySqlCommand(query, connection);
 
                 DBDataAdapter.Fill(table);
 
