@@ -21,11 +21,15 @@ CREATE TABLE transactions
 		ON DELETE CASCADE
 );
 
-INSERT into holdings VALUES ('TSLA', 10);
-UPDATE holdings SET quantity = 0 WHERE ticker = 'TSLA';
-DELETE FROM holdings WHERE ticker = 'TSLA';
-INSERT into transactions 
-	(trade_action, ticker, quantity_change, trade_price, cash_amount)
-VALUES ('BUY','AAPL', 10, 1000, 5000);
+CREATE TABLE stock_profile
+(
+	company_description 		VARCHAR(255) 	PRIMARY KEY UNIQUE,
+	ticker 						VARCHAR(6)		NOT NULL	UNIQUE,
+    asset_type					VARCHAR(255)	NOT NULL,
+    last_price					DECIMAL(13,2)	NOT NULL	DEFAULT 0,
+    CONSTRAINT stock_profile_fk_holdings
+		FOREIGN KEY (ticker) REFERENCES holdings (ticker) 
+		ON DELETE CASCADE
+);
 
 

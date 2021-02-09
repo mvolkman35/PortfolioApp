@@ -16,18 +16,30 @@ namespace PortfolioApp
 
         public void BuyTrade(string ticker, decimal quantity)
         {
-            decimal currentHoldingQuantity = this.CurrentHoldingQuantity(ticker);
+
+            //set needed variables
+            //var response = APIQuoteInfo.GetPriceInfo();
+            //decimal lastPrice = response.Ticker.LastPrice;
+            decimal lastPrice = 100;
+            decimal cashAmount = lastPrice * quantity;
+
             //check if already holding
+            decimal currentHoldingQuantity = this.CurrentHoldingQuantity(ticker);
             if (currentHoldingQuantity >= 1)
             {
                 decimal newQuantity = quantity + currentHoldingQuantity;
                 string query = $"UPDATE holdings SET quantity={newQuantity} WHERE ticker='{ticker}'";
                 currentDBConnection.Update(query);
+
+                RecordTransaction("BUY", ticker, quantity, lastPrice, cashAmount);
+
             }
             else if (currentHoldingQuantity == 0)
             {
                 string query = $"INSERT into holdings VALUES ('{ticker}', {quantity})";
                 currentDBConnection.Insert(query);
+
+                RecordTransaction("BUY", ticker, quantity, lastPrice, cashAmount);
             }
             else
             {
@@ -43,6 +55,8 @@ namespace PortfolioApp
                 decimal newQuantity = currentHoldingQuantity - quantity;
                 string query = $"UPDATE holdings SET quantity={newQuantity} WHERE ticker='{ticker}'";
                 currentDBConnection.Update(query);
+
+                
             }
             else if (currentHoldingQuantity == quantity)
             {
@@ -64,10 +78,12 @@ namespace PortfolioApp
             return quantity;
         }
 
-        private void RecordTransaction(string ticker, decimal quantity)
+        //Need current cash amount method
+
+        private void RecordTransaction(string action, string ticker, decimal quantity, 
+            decimal lastPrice, decimal cashAmount)
         {
-            //need to finish recording amounts 
-            string query = $"INSERT into transactions VALUES ('{ticker}', {quantity})";
+            string query = $"INSERT into transactions (trade_action, ticker, quantity_change, trade_price, cash_amount) VALUES ('{action}', '{ticker}', {quantity}, {lastPrice}, {cashAmount});";
             currentDBConnection.Insert(query);
         }
 

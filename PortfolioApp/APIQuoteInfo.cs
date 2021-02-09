@@ -15,7 +15,7 @@ namespace PortfolioApp
         public static dynamic GetPriceInfo()
         {
             string urlParameters = $"marketdata/{ticker}/quotes?apikey={apiKey}";
-            var response = APICall.RunAsync<JSONParser>(url, urlParameters).GetAwaiter().GetResult();
+            var response = APICall.RunAsync<JSONParseQuote>(url, urlParameters).GetAwaiter().GetResult();
             return response;
         }
     }

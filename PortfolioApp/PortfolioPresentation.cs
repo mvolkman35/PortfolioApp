@@ -18,16 +18,38 @@ namespace PortfolioApp
             InitializeComponent();
         }
 
+        //Region - Current Portfolio
+
         private void clickButtonFetchPort_Click(object sender, EventArgs e)
         {
+            //Update Stock Profile Page from last from API
+            
             string query = "SELECT * from holdings";
             dataGridView1.DataSource = DB_DatagridView(query);
         }
 
+        //End Region - Current Portfolio
+
+        //Region - Get Quote Info
+
         private void buttonGetQuote_Click(object sender, EventArgs e)
         {
+            var response = APIQuoteInfo.GetPriceInfo();
+            decimal lastPrice = response.Ticker.LastPrice;
+            string description = response.Ticker.Description;
+            string assetType = response.Ticker.AssetType;
+            double volume = response.Ticker.TotalVolume;
+
+            labelLastPrice.Text = lastPrice.ToString();
+            labelQuoteDescription.Text = description;
+            labelQuoteAssetType.Text = assetType;
+            labelVolume.Text = volume.ToString();
 
         }
+
+        //End Region - Get Quote Info
+
+        //Region - Transactions
 
         private void buttonTradeSubmit_Click(object sender, EventArgs e)
         {
@@ -50,6 +72,9 @@ namespace PortfolioApp
 
         }
 
+
+        //End Region - Transactions
+
         private void buttonFetchTransactions_Click(object sender, EventArgs e)
         {
             string query = "SELECT * from transactions";
@@ -61,7 +86,7 @@ namespace PortfolioApp
         {
             DBConnect currentDBConnection = new DBConnect();
             //NEED to add a join to this table to pull from stock profile and transaction,
-            //showing description, current price and paid price using sql commands
+            //showing description, current price and market value using sql commands
             DataTable table = new DataTable();
             table = currentDBConnection.Select(query);
 

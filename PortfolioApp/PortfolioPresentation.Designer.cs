@@ -33,6 +33,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabCurrentPortfolio = new System.Windows.Forms.TabPage();
             this.tabQuote = new System.Windows.Forms.TabPage();
+            this.labelQuoteAssetType = new System.Windows.Forms.Label();
+            this.labelQuoteDescription = new System.Windows.Forms.Label();
+            this.labelLastPrice = new System.Windows.Forms.Label();
+            this.buttonGetQuote = new System.Windows.Forms.Button();
             this.tabPortfolioChanges = new System.Windows.Forms.TabPage();
             this.buttonFetchTransactions = new System.Windows.Forms.Button();
             this.dataGridViewTransactions = new System.Windows.Forms.DataGridView();
@@ -40,10 +44,9 @@
             this.comboBoxBuySell = new System.Windows.Forms.ComboBox();
             this.textBoxQuantity = new System.Windows.Forms.TextBox();
             this.buttonTradeSubmit = new System.Windows.Forms.Button();
-            this.buttonGetQuote = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.labelVolume = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabCurrentPortfolio.SuspendLayout();
@@ -100,9 +103,12 @@
             // 
             // tabQuote
             // 
-            this.tabQuote.Controls.Add(this.label3);
             this.tabQuote.Controls.Add(this.label2);
-            this.tabQuote.Controls.Add(this.label1);
+            this.tabQuote.Controls.Add(this.labelVolume);
+            this.tabQuote.Controls.Add(this.textBox1);
+            this.tabQuote.Controls.Add(this.labelQuoteAssetType);
+            this.tabQuote.Controls.Add(this.labelQuoteDescription);
+            this.tabQuote.Controls.Add(this.labelLastPrice);
             this.tabQuote.Controls.Add(this.buttonGetQuote);
             this.tabQuote.Location = new System.Drawing.Point(4, 33);
             this.tabQuote.Name = "tabQuote";
@@ -111,6 +117,43 @@
             this.tabQuote.TabIndex = 1;
             this.tabQuote.Text = "Get Quote Info";
             this.tabQuote.UseVisualStyleBackColor = true;
+            // 
+            // labelQuoteAssetType
+            // 
+            this.labelQuoteAssetType.AutoSize = true;
+            this.labelQuoteAssetType.Location = new System.Drawing.Point(751, 358);
+            this.labelQuoteAssetType.Name = "labelQuoteAssetType";
+            this.labelQuoteAssetType.Size = new System.Drawing.Size(112, 25);
+            this.labelQuoteAssetType.TabIndex = 3;
+            this.labelQuoteAssetType.Text = "Asset Type";
+            // 
+            // labelQuoteDescription
+            // 
+            this.labelQuoteDescription.AutoSize = true;
+            this.labelQuoteDescription.Location = new System.Drawing.Point(746, 291);
+            this.labelQuoteDescription.Name = "labelQuoteDescription";
+            this.labelQuoteDescription.Size = new System.Drawing.Size(109, 25);
+            this.labelQuoteDescription.TabIndex = 2;
+            this.labelQuoteDescription.Text = "Description";
+            // 
+            // labelLastPrice
+            // 
+            this.labelLastPrice.AutoSize = true;
+            this.labelLastPrice.Location = new System.Drawing.Point(746, 225);
+            this.labelLastPrice.Name = "labelLastPrice";
+            this.labelLastPrice.Size = new System.Drawing.Size(98, 25);
+            this.labelLastPrice.TabIndex = 1;
+            this.labelLastPrice.Text = "Last Price";
+            // 
+            // buttonGetQuote
+            // 
+            this.buttonGetQuote.Location = new System.Drawing.Point(191, 256);
+            this.buttonGetQuote.Name = "buttonGetQuote";
+            this.buttonGetQuote.Size = new System.Drawing.Size(177, 117);
+            this.buttonGetQuote.TabIndex = 0;
+            this.buttonGetQuote.Text = "Get Quote";
+            this.buttonGetQuote.UseVisualStyleBackColor = true;
+            this.buttonGetQuote.Click += new System.EventHandler(this.buttonGetQuote_Click);
             // 
             // tabPortfolioChanges
             // 
@@ -188,42 +231,30 @@
             this.buttonTradeSubmit.UseVisualStyleBackColor = true;
             this.buttonTradeSubmit.Click += new System.EventHandler(this.buttonTradeSubmit_Click);
             // 
-            // buttonGetQuote
+            // textBox1
             // 
-            this.buttonGetQuote.Location = new System.Drawing.Point(191, 256);
-            this.buttonGetQuote.Name = "buttonGetQuote";
-            this.buttonGetQuote.Size = new System.Drawing.Size(110, 60);
-            this.buttonGetQuote.TabIndex = 0;
-            this.buttonGetQuote.Text = "Get Quote";
-            this.buttonGetQuote.UseVisualStyleBackColor = true;
-            this.buttonGetQuote.Click += new System.EventHandler(this.buttonGetQuote_Click);
+            this.textBox1.Location = new System.Drawing.Point(228, 151);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 29);
+            this.textBox1.TabIndex = 4;
             // 
-            // label1
+            // labelVolume
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(746, 238);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 25);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
+            this.labelVolume.AutoSize = true;
+            this.labelVolume.Location = new System.Drawing.Point(756, 421);
+            this.labelVolume.Name = "labelVolume";
+            this.labelVolume.Size = new System.Drawing.Size(79, 25);
+            this.labelVolume.TabIndex = 5;
+            this.labelVolume.Text = "Volume";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(746, 291);
+            this.label2.Location = new System.Drawing.Point(223, 109);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 25);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(751, 358);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 25);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "label3";
+            this.label2.Size = new System.Drawing.Size(117, 25);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Enter Ticker";
             // 
             // PortfolioPresentation
             // 
@@ -259,10 +290,13 @@
         private System.Windows.Forms.TextBox textBoxTradeTicker;
         private System.Windows.Forms.DataGridView dataGridViewTransactions;
         private System.Windows.Forms.Button buttonFetchTransactions;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelQuoteAssetType;
+        private System.Windows.Forms.Label labelQuoteDescription;
+        private System.Windows.Forms.Label labelLastPrice;
         private System.Windows.Forms.Button buttonGetQuote;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelVolume;
     }
 }
 

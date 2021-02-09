@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace PortfolioApp
 {
     class JSONParseQuote
     {
-
-        //may need to 
+        //pass in ticker
+        
         [JsonProperty("TSLA")]
         public Equity Ticker { get; set; }
 
