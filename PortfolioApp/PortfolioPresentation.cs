@@ -24,6 +24,11 @@ namespace PortfolioApp
             dataGridView1.DataSource = DB_DatagridView(query);
         }
 
+        private void buttonGetQuote_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void buttonTradeSubmit_Click(object sender, EventArgs e)
         {
             Trade trade = new Trade();
@@ -91,6 +96,8 @@ namespace PortfolioApp
 
             return decimalVal;
         }
+
+
     }
 
 }

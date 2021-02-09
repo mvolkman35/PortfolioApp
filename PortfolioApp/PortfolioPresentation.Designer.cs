@@ -34,15 +34,20 @@
             this.tabCurrentPortfolio = new System.Windows.Forms.TabPage();
             this.tabQuote = new System.Windows.Forms.TabPage();
             this.tabPortfolioChanges = new System.Windows.Forms.TabPage();
+            this.buttonFetchTransactions = new System.Windows.Forms.Button();
+            this.dataGridViewTransactions = new System.Windows.Forms.DataGridView();
             this.textBoxTradeTicker = new System.Windows.Forms.TextBox();
             this.comboBoxBuySell = new System.Windows.Forms.ComboBox();
             this.textBoxQuantity = new System.Windows.Forms.TextBox();
             this.buttonTradeSubmit = new System.Windows.Forms.Button();
-            this.dataGridViewTransactions = new System.Windows.Forms.DataGridView();
-            this.buttonFetchTransactions = new System.Windows.Forms.Button();
+            this.buttonGetQuote = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabCurrentPortfolio.SuspendLayout();
+            this.tabQuote.SuspendLayout();
             this.tabPortfolioChanges.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).BeginInit();
             this.SuspendLayout();
@@ -95,6 +100,10 @@
             // 
             // tabQuote
             // 
+            this.tabQuote.Controls.Add(this.label3);
+            this.tabQuote.Controls.Add(this.label2);
+            this.tabQuote.Controls.Add(this.label1);
+            this.tabQuote.Controls.Add(this.buttonGetQuote);
             this.tabQuote.Location = new System.Drawing.Point(4, 33);
             this.tabQuote.Name = "tabQuote";
             this.tabQuote.Padding = new System.Windows.Forms.Padding(3);
@@ -118,6 +127,29 @@
             this.tabPortfolioChanges.TabIndex = 2;
             this.tabPortfolioChanges.Text = "Portfolio Transactions ";
             this.tabPortfolioChanges.UseVisualStyleBackColor = true;
+            // 
+            // buttonFetchTransactions
+            // 
+            this.buttonFetchTransactions.Location = new System.Drawing.Point(108, 384);
+            this.buttonFetchTransactions.Name = "buttonFetchTransactions";
+            this.buttonFetchTransactions.Size = new System.Drawing.Size(142, 59);
+            this.buttonFetchTransactions.TabIndex = 5;
+            this.buttonFetchTransactions.Text = "Fetch Transactions";
+            this.buttonFetchTransactions.UseVisualStyleBackColor = true;
+            this.buttonFetchTransactions.Click += new System.EventHandler(this.buttonFetchTransactions_Click);
+            // 
+            // dataGridViewTransactions
+            // 
+            this.dataGridViewTransactions.AllowUserToAddRows = false;
+            this.dataGridViewTransactions.AllowUserToDeleteRows = false;
+            this.dataGridViewTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTransactions.Location = new System.Drawing.Point(64, 465);
+            this.dataGridViewTransactions.Name = "dataGridViewTransactions";
+            this.dataGridViewTransactions.ReadOnly = true;
+            this.dataGridViewTransactions.RowHeadersWidth = 72;
+            this.dataGridViewTransactions.RowTemplate.Height = 31;
+            this.dataGridViewTransactions.Size = new System.Drawing.Size(1228, 301);
+            this.dataGridViewTransactions.TabIndex = 4;
             // 
             // textBoxTradeTicker
             // 
@@ -156,28 +188,42 @@
             this.buttonTradeSubmit.UseVisualStyleBackColor = true;
             this.buttonTradeSubmit.Click += new System.EventHandler(this.buttonTradeSubmit_Click);
             // 
-            // dataGridViewTransactions
+            // buttonGetQuote
             // 
-            this.dataGridViewTransactions.AllowUserToAddRows = false;
-            this.dataGridViewTransactions.AllowUserToDeleteRows = false;
-            this.dataGridViewTransactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTransactions.Location = new System.Drawing.Point(64, 465);
-            this.dataGridViewTransactions.Name = "dataGridViewTransactions";
-            this.dataGridViewTransactions.ReadOnly = true;
-            this.dataGridViewTransactions.RowHeadersWidth = 72;
-            this.dataGridViewTransactions.RowTemplate.Height = 31;
-            this.dataGridViewTransactions.Size = new System.Drawing.Size(1228, 301);
-            this.dataGridViewTransactions.TabIndex = 4;
+            this.buttonGetQuote.Location = new System.Drawing.Point(191, 256);
+            this.buttonGetQuote.Name = "buttonGetQuote";
+            this.buttonGetQuote.Size = new System.Drawing.Size(110, 60);
+            this.buttonGetQuote.TabIndex = 0;
+            this.buttonGetQuote.Text = "Get Quote";
+            this.buttonGetQuote.UseVisualStyleBackColor = true;
+            this.buttonGetQuote.Click += new System.EventHandler(this.buttonGetQuote_Click);
             // 
-            // buttonFetchTransactions
+            // label1
             // 
-            this.buttonFetchTransactions.Location = new System.Drawing.Point(108, 384);
-            this.buttonFetchTransactions.Name = "buttonFetchTransactions";
-            this.buttonFetchTransactions.Size = new System.Drawing.Size(142, 59);
-            this.buttonFetchTransactions.TabIndex = 5;
-            this.buttonFetchTransactions.Text = "Fetch Transactions";
-            this.buttonFetchTransactions.UseVisualStyleBackColor = true;
-            this.buttonFetchTransactions.Click += new System.EventHandler(this.buttonFetchTransactions_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(746, 238);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 25);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(746, 291);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(751, 358);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 25);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "label3";
             // 
             // PortfolioPresentation
             // 
@@ -190,6 +236,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabCurrentPortfolio.ResumeLayout(false);
+            this.tabQuote.ResumeLayout(false);
+            this.tabQuote.PerformLayout();
             this.tabPortfolioChanges.ResumeLayout(false);
             this.tabPortfolioChanges.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransactions)).EndInit();
@@ -211,6 +259,10 @@
         private System.Windows.Forms.TextBox textBoxTradeTicker;
         private System.Windows.Forms.DataGridView dataGridViewTransactions;
         private System.Windows.Forms.Button buttonFetchTransactions;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonGetQuote;
     }
 }
 

@@ -21,8 +21,11 @@ CREATE TABLE transactions
 		ON DELETE CASCADE
 );
 
-INSERT into holdings VALUES ('TSLA', 5);
+INSERT into holdings VALUES ('TSLA', 10);
+UPDATE holdings SET quantity = 0 WHERE ticker = 'TSLA';
+DELETE FROM holdings WHERE ticker = 'TSLA';
 INSERT into transactions 
 	(trade_action, ticker, quantity_change, trade_price, cash_amount)
 VALUES ('BUY','AAPL', 10, 1000, 5000);
-DELETE FROM holdings WHERE ticker = 'TSLA';
+
+

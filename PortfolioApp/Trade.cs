@@ -38,11 +38,16 @@ namespace PortfolioApp
         public void SellTrade(string ticker, decimal quantity)
         {
             decimal currentHoldingQuantity = this.CurrentHoldingQuantity(ticker);
-            if (currentHoldingQuantity >= quantity)
+            if (currentHoldingQuantity > quantity)
             {
                 decimal newQuantity = currentHoldingQuantity - quantity;
                 string query = $"UPDATE holdings SET quantity={newQuantity} WHERE ticker='{ticker}'";
                 currentDBConnection.Update(query);
+            }
+            else if (currentHoldingQuantity == quantity)
+            {
+                string query = $"DELETE FROM holdings WHERE ticker='{ticker}'";
+                currentDBConnection.Delete(query);
             }
             else 
             { 

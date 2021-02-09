@@ -121,9 +121,8 @@ namespace PortfolioApp
         }
 
         //Delete statement ** MAY NOT NEED< MAY BUILD AS SQL TRIGGER
-        public void Delete(string ticker)
+        public void Delete(string query)
         {
-            string query = $"DELETE FROM holdings WHERE ticker='{ticker}'";
 
             if (this.OpenConnection() == true)
             {
