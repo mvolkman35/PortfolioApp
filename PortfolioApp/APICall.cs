@@ -30,8 +30,11 @@ namespace PortfolioApp
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         var json = await response.Content.ReadAsStringAsync();
+                        //create a string fixer, easiest way since json ocject changes with ticker, 
+                        //no need to create any complex object
+                        var jsonTickerRemoved = json.Replace("TSLA", "Ticker");
 
-                        var result = JsonConvert.DeserializeObject<T>(json);
+                        var result = JsonConvert.DeserializeObject<T>(jsonTickerRemoved);
 
                         return result;
                     }

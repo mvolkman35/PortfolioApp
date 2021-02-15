@@ -35,7 +35,7 @@ namespace PortfolioApp
         private void buttonGetQuote_Click(object sender, EventArgs e)
         {
             // create classs instation to pas in ticker info
-            var response = APIQuoteInfo.GetPriceInfo();
+            JSONParseQuote response = APIQuoteInfo.GetPriceInfo();
             decimal lastPrice = response.Ticker.LastPrice;
             string description = response.Ticker.Description;
             string assetType = response.Ticker.AssetType;
