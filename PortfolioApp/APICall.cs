@@ -26,7 +26,7 @@ namespace PortfolioApp
             {
                 using (var client = GetHttpClient(url))
                 {
-                    HttpResponseMessage response = await client.GetAsync(urlParameters);
+                    HttpResponseMessage response = await client.GetAsync(urlParameters).ConfigureAwait(false);
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         var json = await response.Content.ReadAsStringAsync();
@@ -48,7 +48,7 @@ namespace PortfolioApp
 
         public static async Task<T> RunAsync<T>(string url, string urlParameters)
         {
-            return await GetAsync<T>(url, urlParameters);
+            return await GetAsync<T>(url, urlParameters).ConfigureAwait(false);
         }
     }
 }
