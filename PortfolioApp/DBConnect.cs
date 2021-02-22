@@ -62,7 +62,6 @@ namespace PortfolioApp
             }
         }
 
-        //Close connection
         private bool CloseConnection()
         {
             try
@@ -77,20 +76,16 @@ namespace PortfolioApp
             }
         }
 
-        //Insert statement
         public void Insert(string query)
         {
 
-            //open connection
             if (this.OpenConnection() == true)
             {
-                //create command and assign the query and connection from the constructor
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                //Execute command
+
                 cmd.ExecuteNonQuery();
 
-                //close connection
                 this.CloseConnection();
             }
         }
@@ -101,22 +96,19 @@ namespace PortfolioApp
             //Open connection
             if (this.OpenConnection() == true)
             {
-                //create mysql command
                 MySqlCommand cmd = new MySqlCommand();
-                //Assign the query using CommandText
+
                 cmd.CommandText = query;
-                //Assign the connection using Connection
+
                 cmd.Connection = connection;
 
-                //Execute query
+
                 cmd.ExecuteNonQuery();
 
-                //close connection
                 this.CloseConnection();
             }
         }
 
-        //Delete statement ** MAY NOT NEED< MAY BUILD AS SQL TRIGGER
         public void Delete(string query)
         {
 
@@ -128,10 +120,8 @@ namespace PortfolioApp
             }
         }
 
-        //Select statement
         public DataTable Select(string query)
         {
-            //string sqlSelectAll = "SELECT * from holdings";
 
             DataTable table = new DataTable();
 
@@ -143,10 +133,8 @@ namespace PortfolioApp
 
                 DBDataAdapter.Fill(table);
 
-                //close Connection
                 this.CloseConnection();
 
-                //return list to be displayed
                 return table;
             }
             else
@@ -158,19 +146,17 @@ namespace PortfolioApp
         public decimal ScalarQuery(string query)
         {
             decimal scalarValue = 0;
-            //Open Connection
+
             if (this.OpenConnection() == true)
             {
-                //Create Mysql Command
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
-                //ExecuteScalar will return one value
+
                 if (cmd.ExecuteScalar() != null)
                 {
                     scalarValue = decimal.Parse(cmd.ExecuteScalar() + "");
                 }
 
-                //close Connection
                 this.CloseConnection();
 
                 return scalarValue;

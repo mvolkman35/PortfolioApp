@@ -10,7 +10,6 @@ namespace PortfolioApp
     class JSONParseQuote
     {
 
-        //[JsonProperty("TSLA")]
         public Equity Ticker { get; set; }
 
         public class Equity

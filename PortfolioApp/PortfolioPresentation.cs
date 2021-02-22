@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,9 +23,10 @@ namespace PortfolioApp
 
         private void clickButtonFetchPort_Click(object sender, EventArgs e)
         {
-            //Update Stock Profile Page from last from API
             
-            string query = "SELECT * from holdings";
+            string query = "SELECT holdings.ticker, company_description, asset_type, quantity, last_price " +
+                "FROM holdings INNER JOIN stock_profile ON holdings.ticker = stock_profile.ticker " +
+                "ORDER BY holdings.ticker ASC;";
             dataGridView1.DataSource = DB_DatagridView(query);
         }
 
@@ -34,17 +36,24 @@ namespace PortfolioApp
 
         private void buttonGetQuote_Click(object sender, EventArgs e)
         {
-            // create classs instation to pas in ticker info
-            JSONParseQuote response = APIQuoteInfo.GetPriceInfo();
-            decimal lastPrice = response.Ticker.LastPrice;
-            string description = response.Ticker.Description;
-            string assetType = response.Ticker.AssetType;
-            double volume = response.Ticker.TotalVolume;
+            string userInputTicker = tickerVerifier(textBoxTickerInput.Text);
+            if (userInputTicker != "invalid")
+            {
+                JSONParseQuote response = APIQuoteInfo.GetPriceInfo(userInputTicker);
+                decimal lastPrice = response.Ticker.LastPrice;
+                string description = response.Ticker.Description;
+                string assetType = response.Ticker.AssetType;
+                double volume = response.Ticker.TotalVolume;
 
-            labelLastPrice.Text = lastPrice.ToString();
-            labelQuoteDescription.Text = description;
-            labelQuoteAssetType.Text = assetType;
-            labelVolume.Text = volume.ToString();
+                labelLastPrice.Text = lastPrice.ToString();
+                labelQuoteDescription.Text = description;
+                labelQuoteAssetType.Text = assetType;
+                labelVolume.Text = volume.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Enter valid ticker.");
+            }
 
         }
 
@@ -54,27 +63,38 @@ namespace PortfolioApp
 
         private void buttonTradeSubmit_Click(object sender, EventArgs e)
         {
-            Trade trade = new Trade();
-            string ticker = textBoxTradeTicker.Text.ToUpper();
-            decimal quantity = ConvertStringtoDecimal(textBoxQuantity.Text);
 
-            if (comboBoxBuySell.Text == "BUY")
+
+            string userInputTicker = tickerVerifier(textBoxTradeTicker.Text);
+            decimal userInputQuantity = quantityVerifier(textBoxQuantity.Text);
+
+
+            if (userInputTicker != "invalid" && userInputTicker != "CASH" && userInputQuantity != 0)
             {
-                trade.BuyTrade(ticker, quantity);
-            }
-            else if (comboBoxBuySell.Text == "SELL")
-            {
-                trade.SellTrade(ticker, quantity);
+                Trade trade = new Trade(userInputTicker, userInputQuantity);
+
+                if (comboBoxBuySell.Text == "BUY")
+                {
+                    trade.BuyTrade();
+                }
+                else if (comboBoxBuySell.Text == "SELL")
+                {
+                    trade.SellTrade();
+                }
+                else
+                {
+                    MessageBox.Show("Enter a action.");
+                }
             }
             else
             {
-                //Please select action mesg
+                MessageBox.Show("Please review ticker and quantity. No cash entry as well.");
             }
 
         }
 
 
-        //End Region - Transactions
+        
 
         private void buttonFetchTransactions_Click(object sender, EventArgs e)
         {
@@ -82,18 +102,50 @@ namespace PortfolioApp
             dataGridViewTransactions.DataSource = DB_DatagridView(query);
         }
 
+        //End Region - Transactions
 
+        //Region - UI helper methods
         private BindingSource DB_DatagridView(string query)
         {
             DBConnect currentDBConnection = new DBConnect();
-            //NEED to add a join to this table to pull from stock profile and transaction,
-            //showing description, current price and market value using sql commands
             DataTable table = new DataTable();
             table = currentDBConnection.Select(query);
 
             BindingSource bSource = new BindingSource();
             bSource.DataSource = table;
             return bSource;
+        }
+
+
+
+        private string tickerVerifier(string userInputTicker)
+        {
+            string verifiedTicker = "invalid";
+            Regex rgx = new Regex(@"^[A-Za-z]{1,5}$");
+            if (rgx.IsMatch(userInputTicker))
+            {
+                verifiedTicker = userInputTicker.ToUpper();
+                return verifiedTicker;
+            }
+            else
+            {
+                return verifiedTicker;
+            }
+        }
+
+        private decimal quantityVerifier(string userInputQuantity)
+        {
+            decimal verifiedQuantity = 0;
+            Regex rgx = new Regex(@"^\d+$");
+            if (rgx.IsMatch(userInputQuantity))
+            {
+                verifiedQuantity = ConvertStringtoDecimal(userInputQuantity);
+                return verifiedQuantity;
+            }
+            else
+            {
+                return verifiedQuantity;
+            }
         }
 
 
@@ -104,25 +156,13 @@ namespace PortfolioApp
             {
                 decimalVal = System.Convert.ToDecimal(stringVal);
             }
-            catch (System.OverflowException)
+            catch (Exception e) 
             {
-                //System.Console.WriteLine(
-                //    "The conversion from string to decimal overflowed.");
-            }
-            catch (System.FormatException)
-            {
-                //System.Console.WriteLine(
-                //    "The string is not formatted as a decimal.");
-            }
-            catch (System.ArgumentNullException)
-            {
-                //System.Console.WriteLine(
-                //    "The string is null.");
+                MessageBox.Show(e.Message);
             }
 
             return decimalVal;
         }
-
 
     }
 

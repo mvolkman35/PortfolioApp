@@ -6,7 +6,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PortfolioApp
 {
@@ -20,8 +22,9 @@ namespace PortfolioApp
             return client;
         }
 
-        private static async Task<T> GetAsync<T>(string url, string urlParameters)
+        private static async Task<T> GetAsync<T>(string url, string urlParameters, string ticker)
         {
+            
             try
             {
                 using (var client = GetHttpClient(url))
@@ -30,10 +33,12 @@ namespace PortfolioApp
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         var json = await response.Content.ReadAsStringAsync();
-                        //create a string fixer, easiest way since json ocject changes with ticker, 
-                        //no need to create any complex object
-                        var jsonTickerRemoved = json.Replace("TSLA", "Ticker");
-
+                        //create a string fixer, easiest way since json main object changes with ticker, 
+                        //no need to create any complex object to adjust at runtime, just replace with generic ticker
+                        //so JSON can de-serialize normally
+                        Regex rgx = new Regex(ticker);
+                        string jsonTickerRemoved = rgx.Replace(json, "Ticker", 1);
+                        
                         var result = JsonConvert.DeserializeObject<T>(jsonTickerRemoved);
 
                         return result;
@@ -44,14 +49,15 @@ namespace PortfolioApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message);
                 return default(T);
             }
         }
 
-        public static async Task<T> RunAsync<T>(string url, string urlParameters)
+        public static async Task<T> RunAsync<T>(string url, string urlParameters, string ticker)
         {
-            return await GetAsync<T>(url, urlParameters).ConfigureAwait(false);
+            return await GetAsync<T>(url, urlParameters, ticker).ConfigureAwait(false);
         }
+
     }
 }

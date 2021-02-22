@@ -10,12 +10,11 @@ namespace PortfolioApp
     {
         const string url = "https://api.tdameritrade.com/v1/";
         const string apiKey = "VU40WNJCOLRF5CD8ARYNFWPWXLP4NZFK";
-        const string ticker = "TSLA";
 
-        public static dynamic GetPriceInfo()
+        public static dynamic GetPriceInfo(string ticker)
         {
             string urlParameters = $"marketdata/{ticker}/quotes?apikey={apiKey}";
-            var response = APICall.RunAsync<JSONParseQuote>(url, urlParameters).GetAwaiter().GetResult();
+            var response = APICall.RunAsync<JSONParseQuote>(url, urlParameters, ticker).GetAwaiter().GetResult();
             return response;
         }
     }

@@ -32,4 +32,6 @@ CREATE TABLE stock_profile
 		ON DELETE CASCADE
 );
 
-
+/* Add CASH to build, always have cash*/
+INSERT into holdings VALUES ('CASH', 10000);
+INSERT into stock_profile VALUES ('Cash Total', 'CASH', 'Cold Hard Cash', 1);
